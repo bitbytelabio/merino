@@ -8,6 +8,9 @@ on:
 jobs:
   build_and_upload_image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Set up Docker buildx
         uses: docker/setup-buildx-action@v2
