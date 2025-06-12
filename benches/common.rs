@@ -1,10 +1,8 @@
-#![feature(test)]
-extern crate test;
+#![allow(unused_imports)]
 
+use bencher::{Bencher, benchmark_group, benchmark_main, black_box};
 use merino::*;
-use test::{Bencher, black_box};
 
-#[bench]
 fn bench_pow(b: &mut Bencher) {
     // Optionally include some setup
     let x: f64 = 211.0 * 11.0;
@@ -12,8 +10,11 @@ fn bench_pow(b: &mut Bencher) {
 
     b.iter(|| {
         // Inner closure, the actual test
-        for i in 1..100 {
+        for _ in 1..100 {
             black_box(x.powf(y).powf(x));
         }
     });
 }
+
+benchmark_group!(benches, bench_pow);
+benchmark_main!(benches);

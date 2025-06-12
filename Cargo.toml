@@ -21,3 +21,6 @@ serde = { version = "1", features = ["derive"] }
 snafu = "0.8"
 thiserror = "2"
 tokio = { version = "1", features = ["full"] }
+
+[dev-dependencies]
+bencher = "0.1"
