@@ -2,6 +2,10 @@
 FROM rust:alpine AS builder
 RUN apk add --no-cache build-base
 
+LABEL org.opencontainers.image.description="This Docker image contains Merino SOCKS5 proxy server."
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.source="https://github.com/bitbytelabio/merino"
+
 # Don't download the entire crates.io package index. Fetch only the index
 # entries for crates that are actually used. This is faster and avoids a memory
 # usage explosion that often breaks docker builds.
