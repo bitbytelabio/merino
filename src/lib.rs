@@ -1,8 +1,8 @@
 #![forbid(unsafe_code)]
-#[macro_use]
-extern crate serde_derive;
+
 #[macro_use]
 extern crate log;
+use serde::Deserialize;
 use snafu::Snafu;
 
 use std::io;
@@ -324,8 +324,7 @@ where
 
         trace!(
             "Version: {} Auth nmethods: {}",
-            self.socks_version,
-            self.auth_nmethods
+            self.socks_version, self.auth_nmethods
         );
 
         match self.socks_version {
@@ -502,13 +501,17 @@ where
 }
 
 /// Convert an address and AddrType to a SocketAddr
-async fn addr_to_socket(addr_type: &AddrType, addr: &[u8], port: u16) -> io::Result<Vec<SocketAddr>> {
+async fn addr_to_socket(
+    addr_type: &AddrType,
+    addr: &[u8],
+    port: u16,
+) -> io::Result<Vec<SocketAddr>> {
     match addr_type {
         AddrType::V6 => {
             let new_addr = (0..8)
                 .map(|x| {
                     trace!("{} and {}", x * 2, (x * 2) + 1);
-                    (u16::from(addr[(x * 2)]) << 8) | u16::from(addr[(x * 2) + 1])
+                    (u16::from(addr[x * 2]) << 8) | u16::from(addr[(x * 2) + 1])
                 })
                 .collect::<Vec<u16>>();
 
@@ -553,7 +556,7 @@ fn pretty_print_addr(addr_type: &AddrType, addr: &[u8]) -> String {
             .join("."),
         AddrType::V6 => {
             let addr_16 = (0..8)
-                .map(|x| (u16::from(addr[(x * 2)]) << 8) | u16::from(addr[(x * 2) + 1]))
+                .map(|x| (u16::from(addr[x * 2]) << 8) | u16::from(addr[(x * 2) + 1]))
                 .collect::<Vec<u16>>();
 
             addr_16
