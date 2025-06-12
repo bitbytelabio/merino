@@ -68,6 +68,26 @@ OR
 docker container run --pull=always --name=merino -p=8001:8001 ghcr.io/ajmwagar/merino:latest --no-auth --port=8001
 ```
 
+OR
+
+```bash
+docker container run --pull=always --name=merino -p=1080:1080 ghcr.io/bitbytelabio/merino:latest --users users.csv --port=1080
+```
+
+```yaml
+services:
+  merino:
+    image: ghcr.io/bitbytelabio/merino:latest
+    container_name: merino
+    ports:
+      - "1080:1080"
+    command: ["--users", "users.csv", "--port", "1080"]
+    volumes:
+      - ./users.csv:/users.csv:ro
+    restart: unless-stopped
+    pull_policy: always
+```
+
 # 🚥 Roadmap
 
 - [x] IPV6 Support

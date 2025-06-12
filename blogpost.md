@@ -25,7 +25,3 @@ tags:
 ## Step 4: Refactor & Optimize
 
 ## Step 5: Profit!
-
-
-
-
